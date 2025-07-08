@@ -1,13 +1,13 @@
-package com.example.banking;
+package com.example.userservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BankingApplication {
+public class UserServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BankingApplication.class, args);
+        SpringApplication.run(UserServiceApplication.class, args);
     }
 
 }
