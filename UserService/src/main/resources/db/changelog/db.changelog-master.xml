@@ -30,4 +30,10 @@
     <!-- 8. Таблица двухфакторной аутентификации -->
     <include file="08-create-two-factor.sql" relativeToChangelogFile="true"/>
 
+    <!-- 9. Добавление роли админа -->
+    <include file="09-add-admin-role.sql" relativeToChangelogFile="true"/>
+
+    <!-- Изменение user-role-enum в верхний регистр -->
+    <include file="convert-user-role-enum-uppercase.xml" relativeToChangelogFile="true"/>
+
 </databaseChangeLog>
