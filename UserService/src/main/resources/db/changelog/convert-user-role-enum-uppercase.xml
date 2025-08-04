@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.15.xsd">
+
+    <!-- 1️⃣ Переводим колонку во временный VARCHAR -->
+    <changeSet id="1-convert-column-to-varchar" author="vadim">
+        <modifyDataType tableName="user_roles" columnName="role" newDataType="VARCHAR(50)"/>
+    </changeSet>
+
+    <!-- 2️⃣ Удаляем старый ENUM -->
+    <changeSet id="2-drop-old-enum" author="vadim">
+        <sql>DROP TYPE IF EXISTS type_user_role;</sql>
+    </changeSet>
+
+    <!-- 3️⃣ Создаём ENUM c верхним регистром -->
+    <changeSet id="3-create-new-enum-uppercase" author="vadim">
+        <sql>
+            CREATE TYPE type_user_role AS ENUM ('INDIVIDUAL', 'SELF_EMPLOYED', 'IP', 'TOO', 'AO', 'ADMIN');
+        </sql>
+    </changeSet>
+
+    <!-- 4️⃣ Обновляем данные в колонке, чтобы значения были в верхнем регистре -->
+    <changeSet id="4-update-data-uppercase" author="vadim">
+        <sql>
+            UPDATE user_roles
+            SET role = UPPER(role);
+        </sql>
+    </changeSet>
+
+    <!-- 5️⃣ Привязываем колонку обратно к ENUM -->
+    <changeSet id="5-convert-column-to-enum" author="vadim">
+        <modifyDataType tableName="user_roles" columnName="role" newDataType="type_user_role"/>
+    </changeSet>
+
+    <!-- ✅ ROLLBACK (откат) -->
+    <changeSet id="rollback-convert-user-role-enum-uppercase" author="vadim">
+        <rollback>
+            <modifyDataType tableName="user_roles" columnName="role" newDataType="VARCHAR(50)"/>
+            <sql>DROP TYPE IF EXISTS type_user_role;</sql>
+            <sql>
+                CREATE TYPE type_user_role AS ENUM ('individual', 'self_employed', 'ip', 'too', 'ao', 'admin');
+            </sql>
+            <sql>UPDATE user_roles SET role = LOWER(role);</sql>
+            <modifyDataType tableName="user_roles" columnName="role" newDataType="type_user_role"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

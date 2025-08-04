@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+           http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- 1. Типы (ENUM) -->
+    <include file="01-create-types.sql" relativeToChangelogFile="true"/>
+
+    <!-- 2. Таблица пользователей -->
+    <include file="02-create-users.sql" relativeToChangelogFile="true"/>
+
+    <!-- 3. Таблица аккаунтов -->
+    <include file="03-create-accounts.sql" relativeToChangelogFile="true"/>
+
+    <!-- 4. Таблица ролей пользователя -->
+    <include file="04-create-user-roles.sql" relativeToChangelogFile="true"/>
+
+    <!-- 5. Таблица карт -->
+    <include file="05-create-cards.sql" relativeToChangelogFile="true"/>
+
+    <!-- 6. Таблица транзакций -->
+    <include file="06-create-transactions.sql" relativeToChangelogFile="true"/>
+
+    <!-- 7. Таблица самозанятых -->
+    <include file="07-create-self-employment.sql" relativeToChangelogFile="true"/>
+
+    <!-- 8. Таблица двухфакторной аутентификации -->
+    <include file="08-create-two-factor.sql" relativeToChangelogFile="true"/>
+
+    <!-- 9. Добавление роли админа -->
+    <include file="09-add-admin-role.sql" relativeToChangelogFile="true"/>
+
+    <!-- Изменение user-role-enum в верхний регистр -->
+    <include file="convert-user-role-enum-uppercase.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>
